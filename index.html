@@ -39,9 +39,9 @@
   .reveal-hero{position:relative;height:100vh;overflow:hidden;background:var(--ink)}
   .stage{position:absolute;inset:0;z-index:1}
   .hero-photo{position:absolute;inset:0;background-size:cover;background-position:center;
-    background-image:url('https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?w=1600&q=70&auto=format&fit=crop');
-    opacity:.24;filter:saturate(.85)}
-  .hero-tint{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 12%,rgba(22,34,74,.66) 0%,rgba(14,23,51,.92) 48%,var(--ink) 100%)}
+    background-image:url('https://images.unsplash.com/photo-1716191300020-b52dec5b70a8?w=1600&q=75&auto=format&fit=crop');
+    filter:saturate(.92)}
+  .hero-tint{position:absolute;inset:0;background:radial-gradient(135% 100% at 50% 40%,rgba(10,16,34,.40) 0%,rgba(10,16,34,.72) 56%,rgba(7,12,28,.93) 100%)}
   .hero-grid{position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent)}
   .hero-inner{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 24px}
   .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--glow);border:1px solid rgba(110,168,255,.4);background:rgba(110,168,255,.08);padding:6px 14px;border-radius:999px;margin-bottom:24px}
@@ -65,18 +65,19 @@
     background:radial-gradient(circle at 35% 30%,#aeb6c4,#3a4252);box-shadow:0 1px 2px rgba(0,0,0,.6)}
   .housing .bolt.l{left:18px} .housing .bolt.r{right:18px}
 
-  /* 셔터 패널(슬랫) — clip-path 로 아래에서 위로 열림 */
-  .shutter{position:absolute;left:0;right:0;top:72px;bottom:0;z-index:30;display:flex;flex-direction:column;
-    clip-path:inset(0% 0% 0% 0%);will-change:clip-path;
-    box-shadow:inset 14px 0 24px rgba(0,0,0,.28),inset -14px 0 24px rgba(0,0,0,.28)}
-  .slat2{flex:1 1 0;min-height:14px;
-    background:linear-gradient(180deg,#7c889d 0%,#d9e0ea 30%,#b3bccc 60%,#727d91 100%);
-    border-bottom:1px solid rgba(8,12,24,.42);
-    box-shadow:inset 0 1px 1px rgba(255,255,255,.55)}
+  /* 셔터 패널(실사 강철 셔터) — clip-path 로 아래에서 위로 열림 */
+  .shutter{position:absolute;left:0;right:0;top:72px;bottom:0;z-index:30;overflow:hidden;
+    clip-path:inset(0% 0% 0% 0%);will-change:clip-path}
+  .shutter-img{position:absolute;inset:0;background-size:cover;background-position:center;
+    background-image:url('https://images.unsplash.com/photo-1577451581538-67043aba1116?w=1400&q=78&auto=format&fit=crop');
+    filter:grayscale(1) contrast(1.06) brightness(.98)}
+  .shutter-tint{position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(150,180,230,.16),transparent 12%),radial-gradient(140% 100% at 50% 38%,rgba(31,58,138,.20),rgba(7,12,28,.52));
+    box-shadow:inset 18px 0 34px rgba(0,0,0,.38),inset -18px 0 34px rgba(0,0,0,.38)}
   /* 하단 손잡이 바(rail) — 셔터의 바닥 모서리, 위로 상승 */
   .rail{position:absolute;left:0;right:0;bottom:0;height:30px;z-index:35;
-    background:linear-gradient(180deg,#5a6473 0%,#39414e 48%,#222932 100%);
-    border-top:1px solid rgba(255,255,255,.28);box-shadow:0 10px 26px rgba(0,0,0,.4),0 2px 0 rgba(0,0,0,.5)}
+    background:linear-gradient(180deg,#9aa3b2 0%,#69727f 46%,#3a414c 100%);
+    border-top:1px solid rgba(255,255,255,.4);box-shadow:0 12px 28px rgba(0,0,0,.45),0 2px 0 rgba(0,0,0,.5)}
   .rail::after{content:'';position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:74px;height:7px;border-radius:5px;
     background:linear-gradient(180deg,#222932,#454f5d);box-shadow:inset 0 1px 1px rgba(255,255,255,.2)}
   /* 셔터가 들리며 새어드는 빛 */
@@ -171,7 +172,7 @@
     </div>
   </div>
   <div class="housing"><span class="bolt l"></span><span class="bolt r"></span></div>
-  <div class="shutter" id="shutter"></div>
+  <div class="shutter" id="shutter"><div class="shutter-img"></div><div class="shutter-tint"></div></div>
   <div class="rail" id="rail"></div>
   <div class="open-hint" id="hint"><div class="t">스크롤하여 셔터를 여세요</div><div class="chev"></div></div>
 </section>
@@ -248,16 +249,14 @@
   gsap.registerPlugin(ScrollTrigger);
   const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 셔터 슬랫 생성
   const HOUSING=72, shutter=document.getElementById('shutter'), rail=document.getElementById('rail'), heroEl=document.getElementById('top');
-  for(let i=0;i<20;i++) shutter.appendChild(Object.assign(document.createElement('div'),{className:'slat2'}));
 
   if(reduce){
     // 모션 최소화: 셔터를 즉시 열어 콘텐츠 노출
     shutter.style.display='none'; rail.style.display='none'; document.getElementById('hint').style.display='none';
   }else{
     // ▶ 핵심: 스크롤에 따라 셔터가 위로 말려 올라가며(클립) 하단 손잡이 바가 상승
-    const tl=gsap.timeline({scrollTrigger:{trigger:heroEl,start:'top top',end:'+=170%',scrub:.5,pin:true,anticipatePin:1,invalidateOnRefresh:true}});
+    const tl=gsap.timeline({scrollTrigger:{trigger:heroEl,start:'top top',end:'+=185%',scrub:.6,pin:true,anticipatePin:1,invalidateOnRefresh:true}});
     tl.to('#hint',{opacity:0,duration:.1,ease:'none'},0)
       .fromTo(shutter,{clipPath:'inset(0% 0% 0% 0%)'},{clipPath:'inset(0% 0% 100% 0%)',ease:'none',duration:1},0)
       .fromTo(rail,{y:0},{y:()=>-(heroEl.clientHeight-HOUSING-rail.offsetHeight),ease:'none',duration:1},0)
