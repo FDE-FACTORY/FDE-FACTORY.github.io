@@ -87,6 +87,35 @@
   .open-hint .t{font-size:13px;font-weight:700;letter-spacing:.04em;text-shadow:0 1px 8px rgba(0,0,0,.6)}
   .open-hint .chev{margin:8px auto 0;width:14px;height:14px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);opacity:.85}
 
+  /* ── 개념(Concept) ── */
+  .concept{background:var(--surface)}
+  .def-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .def-card{border:1px solid var(--border);border-radius:16px;padding:28px;background:var(--surface-alt)}
+  .def-card .ic{width:52px;height:52px;border-radius:13px;background:var(--accent-soft);border:1px solid var(--accent-border);display:grid;place-items:center;margin-bottom:16px}
+  .def-card .en{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--accent)}
+  .def-card h3{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
+  .def-card .lead{margin-top:10px;color:var(--soft);font-size:14.5px;line-height:1.65}
+  .def-card ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:7px}
+  .def-card li{position:relative;padding-left:18px;font-size:13.5px;color:var(--text)}
+  .def-card li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+
+  .thread-wrap{margin-top:22px;padding:24px;border:1px solid var(--border);border-radius:16px;background:#fff}
+  .thread-cap{font-size:13px;font-weight:700;color:var(--accent);text-align:center;margin-bottom:16px}
+  .thread-cap span{color:var(--muted);font-weight:500}
+  .thread{display:flex;align-items:center;gap:8px;overflow-x:auto;padding:4px 2px 8px}
+  .step{flex:0 0 auto;min-width:128px;border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;background:var(--surface-alt)}
+  .step .stag{font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:2px 7px;display:inline-block}
+  .step .stt{font-size:13px;font-weight:700;margin-top:7px;letter-spacing:-.01em}
+  .arr{flex:0 0 auto;color:var(--accent-border);font-weight:700;font-size:16px}
+
+  .compare{margin-top:22px;width:100%;border-collapse:collapse;font-size:13.5px;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .compare th,.compare td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  .compare thead th{background:var(--surface-alt);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .compare td:first-child{font-weight:700;color:var(--soft);white-space:nowrap}
+  .compare .old{color:var(--muted)}
+  .compare .neo{color:var(--accent);font-weight:600}
+  .compare tr:last-child td{border-bottom:none}
+
   /* ── 갤러리 마퀴 ── */
   .gallery{padding:72px 0 78px;background:var(--ink2);overflow:hidden;position:relative;z-index:2}
   .gallery .sec-h h2{color:#fff}
@@ -149,7 +178,7 @@
 <header id="hdr">
   <div class="wrap nav">
     <div class="brand"><span class="logo"><span></span></span>FDE-Smart Factory</div>
-    <nav class="nav-links"><a href="#field">현장</a><a href="#what">플랫폼</a><a href="#projects">프로젝트</a><a href="https://github.com/FDE-FACTORY">GitHub</a></nav>
+    <nav class="nav-links"><a href="#field">현장</a><a href="#concept">개념</a><a href="#what">플랫폼</a><a href="#projects">프로젝트</a><a href="https://github.com/FDE-FACTORY">GitHub</a></nav>
   </div>
 </header>
 
@@ -203,6 +232,66 @@
     <figure class="tile"><img loading="lazy" onerror="imgFail(this)" alt="스마트팩토리" src="https://images.unsplash.com/photo-1717386255773-a456c611dc4e?w=600&q=70&auto=format&fit=crop"><figcaption>스마트팩토리</figcaption></figure>
     <figure class="tile"><img loading="lazy" onerror="imgFail(this)" alt="현장" src="https://images.unsplash.com/photo-1509390288171-ce2088f7d08e?w=600&q=70&auto=format&fit=crop"><figcaption>현장 전경</figcaption></figure>
   </div></div>
+</section>
+
+<!-- 개념: 스마트팩토리 / FDE 정의 + 도식 -->
+<section id="concept" class="concept">
+  <div class="wrap">
+    <div class="sec-h reveal"><div class="k">CONCEPT</div><h2>스마트팩토리와 FDE, 무엇인가</h2>
+      <p>두 개념이 만나 "현장에 깊게 결합된, 데이터로 흐르는 공장"이 됩니다</p></div>
+    <div class="def-grid reveal">
+      <div class="def-card">
+        <div class="ic">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#1f3a8a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"/><path d="M4 21v-9l5 3.2V12l5 3.2V9l5 3.2V21"/>
+            <circle cx="7.5" cy="6.4" r="1.3"/><path d="M7.5 7.7V11"/><path d="M5.6 5l1.9 1.4L9.4 5"/></svg>
+        </div>
+        <div class="en">SMART FACTORY</div>
+        <h3>스마트팩토리</h3>
+        <p class="lead">설비 · 공정 · 사람 · 문서가 데이터로 연결되어, 한 번 입력한 정보가 견적 → 생산 → 품질 → 정산까지 끊김 없이 흐르고 실시간으로 보이는 공장.</p>
+        <ul><li>부서별 엑셀 · 수기 → 하나의 디지털 스레드</li><li>로트번호 자동 채번 · 전 공정 추적성</li><li>설비 데이터(MDC) · 실적 KPI 실시간 가시화</li></ul>
+      </div>
+      <div class="def-card">
+        <div class="ic">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#1f3a8a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="7.5" r="3"/><path d="M3.5 20v-.5a5 5 0 0 1 8-4"/>
+            <circle cx="17" cy="15.5" r="3.1"/><path d="M17 11.9v-1.1M17 20.2v-1.1M20.6 15.5h-1.1M14.5 15.5h-1.1M19.5 13l-.8.8M15.3 17.2l-.8.8M19.5 18l-.8-.8M15.3 13.8l-.8-.8"/>
+            <path d="M11 9.4l3.1 3.1"/></svg>
+        </div>
+        <div class="en">FORWARD DEPLOYED ENGINEERING</div>
+        <h3>FDE</h3>
+        <p class="lead">엔지니어가 현장에 깊숙이 들어가, 실제 업무 흐름에 맞춰 소프트웨어를 만들고 운영 그 자체가 되게 하는 방식.</p>
+        <ul><li>외주 SI의 거리감 대신 현장 밀착</li><li>실제 견적서 · 작업지시 양식 그대로 디지털화</li><li>고령 생산직도 쉬운 단순 UI · 즉시 반영</li></ul>
+      </div>
+    </div>
+
+    <div class="thread-wrap reveal">
+      <div class="thread-cap">하나의 디지털 스레드 <span>— 한 번 입력한 데이터가 끝까지 흐릅니다</span></div>
+      <div class="thread">
+        <div class="step"><span class="stag">ERP</span><div class="stt">영업 · 견적</div></div>
+        <div class="arr">→</div>
+        <div class="step"><span class="stag">MES</span><div class="stt">작업지시 · 로트채번</div></div>
+        <div class="arr">→</div>
+        <div class="step"><span class="stag">MES</span><div class="stt">생산 · 현장실측</div></div>
+        <div class="arr">→</div>
+        <div class="step"><span class="stag">품질</span><div class="stt">품질관리 · 추적</div></div>
+        <div class="arr">→</div>
+        <div class="step"><span class="stag">ERP</span><div class="stt">세금계산서 · 정산</div></div>
+        <div class="arr">→</div>
+        <div class="step"><span class="stag">협업</span><div class="stt">메신저 · 결재</div></div>
+      </div>
+    </div>
+
+    <table class="compare reveal">
+      <thead><tr><th>구분</th><th>기존 방식</th><th>스마트팩토리 · FDE</th></tr></thead>
+      <tbody>
+        <tr><td>데이터</td><td class="old">부서별 엑셀 · 수기, 단절</td><td class="neo">하나의 디지털 스레드로 연결</td></tr>
+        <tr><td>채번 · 추적</td><td class="old">사람이 수동 관리</td><td class="neo">자동 채번 · 전 공정 추적성</td></tr>
+        <tr><td>현장 결합</td><td class="old">외주 SI, 현장과 멀어짐</td><td class="neo">현장 밀착(FDE) · 즉시 반영</td></tr>
+        <tr><td>의사결정</td><td class="old">사후 · 경험 의존</td><td class="neo">실시간 데이터 · KPI 기반</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section id="what">
@@ -300,6 +389,7 @@
     });
     gsap.utils.toArray('.reveal').forEach(el=>gsap.from(el,{y:40,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 84%'}}));
     gsap.from('.grid .card',{y:46,opacity:0,duration:.7,ease:'power3.out',stagger:.12,scrollTrigger:{trigger:'.grid',start:'top 80%'}});
+    gsap.from('.thread .step',{opacity:0,y:18,duration:.5,ease:'power3.out',stagger:.09,scrollTrigger:{trigger:'.thread',start:'top 85%'}});
   }
 
   // 헤더 — 셔터 히어로를 지나면 솔리드
