@@ -38,9 +38,8 @@
   /* ── 셔터 리빌 히어로 ── */
   .reveal-hero{position:relative;height:100vh;overflow:hidden;background:var(--ink)}
   .stage{position:absolute;inset:0;z-index:1}
-  .hero-photo{position:absolute;inset:0;background-size:cover;background-position:center;
-    background-image:url('https://images.unsplash.com/photo-1716191300020-b52dec5b70a8?w=1600&q=75&auto=format&fit=crop');
-    filter:saturate(.92)}
+  .hero-photo{position:absolute;inset:0;overflow:hidden;filter:saturate(.92)}
+  .hero-photo .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;will-change:opacity,transform}
   .hero-tint{position:absolute;inset:0;background:radial-gradient(135% 100% at 50% 40%,rgba(10,16,34,.40) 0%,rgba(10,16,34,.72) 56%,rgba(7,12,28,.93) 100%)}
   .hero-grid{position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent)}
   .hero-inner{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:0 24px}
@@ -157,7 +156,14 @@
 <!-- 스크롤하면 셔터가 올라가며 열리는 히어로 -->
 <section class="reveal-hero" id="top">
   <div class="stage">
-    <div class="hero-photo"></div>
+    <div class="hero-photo" id="bgshow">
+      <div class="slide" style="opacity:1;background-image:url('https://images.unsplash.com/photo-1716191300020-b52dec5b70a8?w=1600&q=75&auto=format&fit=crop')"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1668511238530-ab0d1bc3037c?w=1600&q=75&auto=format&fit=crop')"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1606206873764-fd15e242df52?w=1600&q=75&auto=format&fit=crop')"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1581091212991-8891c7d4bd9b?w=1600&q=75&auto=format&fit=crop')"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1716191299980-a6e8827ba10b?w=1600&q=75&auto=format&fit=crop')"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=1600&q=75&auto=format&fit=crop')"></div>
+    </div>
     <div class="hero-tint"></div>
     <div class="hero-grid"></div>
     <div class="hero-inner">
@@ -262,6 +268,25 @@
       .fromTo(rail,{y:0},{y:()=>-(heroEl.clientHeight-HOUSING-rail.offsetHeight),ease:'none',duration:1},0)
       .to(rail,{opacity:0,duration:.08,ease:'none'},.92)
       .fromTo('.stage',{scale:1.08},{scale:1,ease:'none',duration:1},0); // 드러나는 화면 미세 줌-아웃
+  }
+
+  // 히어로 배경 — 스마트팩토리 + FDE 이미지 시간순 순환(크로스페이드 + 켄번스 줌)
+  const slides=gsap.utils.toArray('#bgshow .slide');
+  if(slides.length){
+    gsap.set(slides,{opacity:0}); gsap.set(slides[0],{opacity:1});
+    if(!reduce && slides.length>1){
+      const HOLD=4.2, FADE=1.6; let cur=0;
+      const ken=el=>gsap.fromTo(el,{scale:1.07},{scale:1,duration:HOLD+FADE,ease:'none'});
+      ken(slides[0]);
+      const step=()=>{
+        const nx=(cur+1)%slides.length;
+        ken(slides[nx]);
+        gsap.to(slides[nx],{opacity:1,duration:FADE,ease:'power2.inOut'});
+        gsap.to(slides[cur],{opacity:0,duration:FADE,ease:'power2.inOut'});
+        cur=nx; gsap.delayedCall(HOLD+FADE,step);
+      };
+      gsap.delayedCall(HOLD+FADE,step);
+    }
   }
 
   // 무한 마퀴(현장 이미지)
